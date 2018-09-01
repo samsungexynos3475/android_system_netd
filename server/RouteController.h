@@ -82,6 +82,9 @@ constexpr int32_t RULE_PRIORITY_UID_DEFAULT_NETWORK               = 29000;
 // the network, it will not work. That will potentially cause a user-visible error.
 constexpr int32_t RULE_PRIORITY_UID_DEFAULT_UNREACHABLE           = 30000;
 constexpr int32_t RULE_PRIORITY_DEFAULT_NETWORK                   = 31000;
+#ifdef NEEDS_NETD_DIRECT_CONNECT_RULE
+const uint32_t RULE_PRIORITY_DIRECTLY_CONNECTED      = 30000;
+#endif
 constexpr int32_t RULE_PRIORITY_UNREACHABLE                       = 32000;
 // clang-format on
 
