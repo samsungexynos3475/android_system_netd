@@ -72,6 +72,7 @@ protected:
 
 private:
   FirewallType mFirewallType;
+  bool mUseBpfOwnerMatch;
   std::set<std::string> mIfaceRules;
   int flushRules(void);
 };

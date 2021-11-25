@@ -40,6 +40,14 @@ using android::base::Join;
 using android::base::StringAppendF;
 using android::base::StringPrintf;
 
+namespace {
+
+bool getBpfOwnerStatus() {
+    return 0;
+}
+
+}  // namespace
+
 namespace android {
 namespace net {
 
@@ -70,7 +78,12 @@ FirewallController::FirewallController(void) {
 }
 
 int FirewallController::setupIptablesHooks(void) {
-    return flushRules();
+    int res = 0;
+    mUseBpfOwnerMatch = getBpfOwnerStatus();
+    if (mUseBpfOwnerMatch) {
+        return res;
+    }
+    return res;
 }
 
 int FirewallController::setFirewallType(FirewallType ftype) {
@@ -111,7 +124,16 @@ int FirewallController::flushRules() {
 int FirewallController::resetFirewall(void) {
     mFirewallType = ALLOWLIST;
     mIfaceRules.clear();
-    return flushRules();
+
+    // flush any existing rules
+    std::string command =
+        "*filter\n"
+        ":fw_INPUT -\n"
+        ":fw_OUTPUT -\n"
+        ":fw_FORWARD -\n"
+        "COMMIT\n";
+
+    return (execIptablesRestore(V4V6, command.c_str()) == 0) ? 0 : -EREMOTEIO;
 }
 
 int FirewallController::isFirewallEnabled(void) {
