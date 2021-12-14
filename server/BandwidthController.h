@@ -68,7 +68,7 @@ public:
     static const char LOCAL_MANGLE_POSTROUTING[];
     static const char LOCAL_GLOBAL_ALERT[];
 
-    enum IptJumpOp { IptJumpReject, IptJumpReturn };
+    enum IptJumpOp { IptJumpReject, IptJumpReturn, IptJumpNoAdd };
     enum IptOp { IptOpInsert, IptOpDelete };
 
   private:
