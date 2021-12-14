@@ -32,6 +32,7 @@ public:
     BandwidthController();
 
     int setupIptablesHooks();
+    void setBpfEnabled(bool isEnabled);
 
     int enableBandwidthControl();
     int disableBandwidthControl();
@@ -121,6 +122,8 @@ public:
 
     static const char *opToString(IptOp op);
     static const char *jumpToString(IptJumpOp jumpHandling);
+
+    bool mBpfSupported = false;
 
     int64_t mSharedQuotaBytes = 0;
     int64_t mSharedAlertBytes = 0;
